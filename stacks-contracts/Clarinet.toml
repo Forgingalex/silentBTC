@@ -1,0 +1,27 @@
+[project]
+name = "stacks-contracts"
+description = "silentBTC native STX/sBTC/USDCx intent protocol"
+authors = []
+telemetry = false
+cache_dir = "./.cache"
+
+[[project.requirements]]
+contract_id = "SM3VDXK3WZZSA84XXFKAFAF15NNZX32CTSG82JFQ4.sbtc-token"
+
+[contracts.usdcx-token]
+path = "contracts/usdcx-token.clar"
+clarity_version = 3
+epoch = 3.0
+depends_on = []
+
+[contracts.silent-bridge-v2]
+path = "contracts/silent-bridge.clar"
+clarity_version = 3
+epoch = 3.0
+depends_on = ["usdcx-token"]
+
+[contracts.silent-bridge-mainnet]
+path = "contracts/silent-bridge-mainnet.clar"
+clarity_version = 3
+epoch = 3.0
+depends_on = []

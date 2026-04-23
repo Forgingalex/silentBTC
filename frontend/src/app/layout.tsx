@@ -3,8 +3,8 @@ import Providers from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'SilentBridge - Privacy-Preserving Cross-Chain Bridge',
-  description: 'Bridge assets across chains with full privacy using FHE technology',
+  title: 'silentBTC - Native Stacks Intents',
+  description: 'Signal shielded STX, sBTC, and USDCx swap intents on Stacks.',
 };
 
 export default function RootLayout({
@@ -22,4 +22,3 @@ export default function RootLayout({
     </html>
   );
 }
-

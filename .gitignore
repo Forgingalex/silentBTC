@@ -34,6 +34,13 @@ yarn-error.log*
 .env*.local
 frontend/.env
 frontend/.env*.local
+frontend/.env.mainnet.local
+
+# Clarinet
+stacks-contracts/.cache/
+stacks-contracts/settings/Mainnet.toml
+stacks-contracts/settings/Testnet.toml
+stacks-contracts/settings/Devnet.toml
 
 # Vercel
 .vercel

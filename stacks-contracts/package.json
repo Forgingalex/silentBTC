@@ -1,0 +1,18 @@
+{
+  "name": "silentbtc-contracts-tests",
+  "version": "1.0.0",
+  "description": "Unit tests for silentBTC Clarity contracts.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "vitest run",
+    "test:report": "vitest run -- --coverage --costs"
+  },
+  "dependencies": {
+    "@stacks/clarinet-sdk": "^3.9.0",
+    "@stacks/transactions": "^7.2.0",
+    "@types/node": "^24.4.0",
+    "vitest": "^4.0.7",
+    "vitest-environment-clarinet": "^3.0.0"
+  }
+}

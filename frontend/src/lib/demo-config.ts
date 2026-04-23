@@ -48,42 +48,46 @@ export interface BridgeTransaction {
   status: 'pending' | 'completed' | 'failed';
   timestamp: string;
   routingPreference?: 'fastest' | 'cheapest';
-  encryptedRoutingIntent?: string;
-  route?: string; // e.g., "Base → Arbitrum"
+  route?: string; // e.g., "STX -> sBTC"
 }
 
 export const demoData = {
   tokens: [
-    { symbol: 'ETH', name: 'Ethereum', chain: 'Ethereum', address: '0x0', decimals: 18 },
-    { symbol: 'USDC', name: 'USD Coin', chain: 'Ethereum', address: '0xA0b8...', decimals: 6 },
-    { symbol: 'USDC', name: 'USD Coin', chain: 'Polygon', address: '0x2791...', decimals: 6 },
-    { symbol: 'ETH', name: 'Ethereum', chain: 'Arbitrum', address: '0x0', decimals: 18 },
-    { symbol: 'USDC', name: 'USD Coin', chain: 'Arbitrum', address: '0xFF97...', decimals: 6 },
+    { symbol: 'STX', name: 'Stacks', chain: 'Stacks', address: 'native-stx', decimals: 6 },
+    { symbol: 'sBTC', name: 'sBTC', chain: 'Stacks', address: 'STX-SBTC', decimals: 8 },
+    { symbol: 'USDCx', name: 'USDCx', chain: 'Stacks', address: 'STX-USDCX', decimals: 6 },
   ] as Token[],
   transactions: [
     {
-      id: '0x1234...5678',
-      fromToken: { symbol: 'ETH', name: 'Ethereum', chain: 'Ethereum', address: '0x0', decimals: 18 },
-      toToken: { symbol: 'USDC', name: 'USD Coin', chain: 'Polygon', address: '0x2791...', decimals: 6 },
-      amount: '1.5',
+      id: 'intent-mock-fastest',
+      fromToken: { symbol: 'STX', name: 'Stacks', chain: 'Stacks', address: 'native-stx', decimals: 6 },
+      toToken: { symbol: 'sBTC', name: 'sBTC', chain: 'Stacks', address: 'STX-SBTC', decimals: 8 },
+      amount: '25.000000',
       status: 'completed' as const,
       timestamp: new Date(Date.now() - 3600000).toISOString(),
       routingPreference: 'fastest' as const,
-      encryptedRoutingIntent: '0xff7f4a8b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f',
-      route: 'Ethereum → Polygon',
+      route: 'STX -> sBTC',
     },
     {
-      id: '0xabcd...ef01',
-      fromToken: { symbol: 'USDC', name: 'USD Coin', chain: 'Polygon', address: '0x2791...', decimals: 6 },
-      toToken: { symbol: 'ETH', name: 'Ethereum', chain: 'Ethereum', address: '0x0', decimals: 18 },
-      amount: '2500',
+      id: 'intent-mock-cheapest',
+      fromToken: { symbol: 'sBTC', name: 'sBTC', chain: 'Stacks', address: 'STX-SBTC', decimals: 8 },
+      toToken: { symbol: 'STX', name: 'Stacks', chain: 'Stacks', address: 'native-stx', decimals: 6 },
+      amount: '0.05000000',
       status: 'completed' as const,
       timestamp: new Date(Date.now() - 1800000).toISOString(),
       routingPreference: 'cheapest' as const,
-      encryptedRoutingIntent: '0xcc7f4a8b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f',
-      route: 'Polygon → Ethereum',
+      route: 'sBTC -> STX',
+    },
+    {
+      id: 'intent-mock-usdcx',
+      fromToken: { symbol: 'USDCx', name: 'USDCx', chain: 'Stacks', address: 'STX-USDCX', decimals: 6 },
+      toToken: { symbol: 'sBTC', name: 'sBTC', chain: 'Stacks', address: 'STX-SBTC', decimals: 8 },
+      amount: '100.000000',
+      status: 'completed' as const,
+      timestamp: new Date(Date.now() - 900000).toISOString(),
+      routingPreference: 'fastest' as const,
+      route: 'USDCx -> sBTC',
     },
   ] as BridgeTransaction[],
-  chains: ['Ethereum', 'Polygon', 'Arbitrum', 'Optimism'],
+  chains: ['Stacks'],
 };
-

@@ -1,0 +1,17 @@
+# silentBTC Mainnet Release Freeze Manifest
+
+Date: 2026-04-23
+
+This manifest pins the release-track artifacts prepared for external audit handoff and pre-mainnet review.
+
+```text
+725fd50df2dbe71b70ba791976149eecb0af00bfa74b3ff2d6cfc6285caac078  stacks-contracts/contracts/silent-bridge-mainnet.clar
+2352be9112a377e77b43cf75aca081ab83e4100e7db16ff50424f452cd35ba59  stacks-contracts/tests/silent-bridge-mainnet.test.ts
+9cdf056cf143f2cc50e55526e069cd515c6c50e398a5166beea1fa9be9070c57  frontend/src/components/DemoBridge.tsx
+d60877b10b61b45ed5d4e8dbbd753b9fc69f6b375840908721462ea9a246a606  frontend/src/lib/stacks-config.ts
+dff1ba54639812c57001336a7bb5117105e947bbf0ce356fd5b76c5dc978a7ff  docs/SOLVER_POLICY.md
+4603edb06ec4287c12dc9b65eb78acc2d6c5cfedaf5ccac96fdb0d13715326d7  docs/SOLVER_OPERATIONS.md
+382c9ce1560f15a39b2e4db2a000248e16eeda0ecbb9bcf2843b93488bd5a2f3  docs/QUOTE_SOURCE.md
+3c037f0877d1fd25a5e927794d41526946252030fba324961f08c9a5aebc0922  docs/MAINNET-RELEASE-CHECKLIST.md
+53f67f80a18feb6813923dbd7e5a69eed64fed6982af61c91fb1974d87133eaa  docs/MAINNET-DRESS-REHEARSAL.md
+```
