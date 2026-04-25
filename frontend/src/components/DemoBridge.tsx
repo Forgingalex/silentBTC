@@ -507,6 +507,8 @@ export default function DemoBridge() {
 
   const route = SWAP_ROUTES[swapMode];
   const availableSwapModes = isReleaseTrackContract ? MAINNET_RELEASE_SWAP_ORDER : SWAP_ORDER;
+  const visibleAssetSymbols: AssetSymbol[] = isReleaseTrackContract ? ['STX', 'sBTC'] : ['STX', 'sBTC', 'USDCx'];
+  const explorerAssetOptions: ('all' | AssetSymbol)[] = ['all', ...visibleAssetSymbols];
   const operatorAssetOptions: AssetSymbol[] = isReleaseTrackContract ? ['STX', 'sBTC'] : ['STX', 'sBTC', 'USDCx'];
   const fromToken = getTokenBySymbol(route.from);
   const toToken = getTokenBySymbol(route.to);
@@ -1304,6 +1306,10 @@ export default function DemoBridge() {
 
   const explorerTransactions: ActiveTransaction[] = (() => {
     if (!walletAddress || !isAddressForConfiguredNetwork(walletAddress)) {
+      if (isReleaseTrackContract) {
+        return [];
+      }
+
       return demoData.transactions.map(tx => ({
         id: tx.id,
         txId: tx.id,
@@ -1333,19 +1339,25 @@ export default function DemoBridge() {
       (left, right) => new Date(right.timestamp).getTime() - new Date(left.timestamp).getTime()
     );
 
-    return resolvedTransactions.length > 0
-      ? resolvedTransactions
-      : demoData.transactions.map(tx => ({
-        id: tx.id,
-        txId: tx.id,
-        amount: tx.amount,
-        unitAmount: parseTokenUnits(tx.amount, tx.fromToken.decimals)?.toString() || '0',
-        fromAsset: toAssetSymbol(tx.fromToken),
-        toAsset: toAssetSymbol(tx.toToken),
-        preference: tx.routingPreference || 'fastest',
-        status: 'Privacy Shielded',
-        timestamp: tx.timestamp,
-      }));
+    if (resolvedTransactions.length > 0) {
+      return resolvedTransactions;
+    }
+
+    if (isReleaseTrackContract) {
+      return [];
+    }
+
+    return demoData.transactions.map(tx => ({
+      id: tx.id,
+      txId: tx.id,
+      amount: tx.amount,
+      unitAmount: parseTokenUnits(tx.amount, tx.fromToken.decimals)?.toString() || '0',
+      fromAsset: toAssetSymbol(tx.fromToken),
+      toAsset: toAssetSymbol(tx.toToken),
+      preference: tx.routingPreference || 'fastest',
+      status: 'Privacy Shielded',
+      timestamp: tx.timestamp,
+    }));
   })();
 
   const filteredExplorerTransactions = explorerTransactions.filter(tx => {
@@ -2141,7 +2153,7 @@ export default function DemoBridge() {
         </div>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(110px, 1fr))', gap: '0.75rem' }}>
-          {(Object.keys(visibleWalletBalances) as AssetSymbol[]).map(symbol => {
+          {visibleAssetSymbols.map(symbol => {
             const balance = visibleWalletBalances[symbol];
 
             return (
@@ -2171,7 +2183,7 @@ export default function DemoBridge() {
 
         {!isWalletSignedIn && (
           <div style={{ color: '#71717A', fontSize: '0.76rem', fontWeight: 700, marginTop: '0.9rem' }}>
-            Connect a wallet to replace the demo snapshot with your live STX, sBTC, and USDCx balances.
+            Connect a wallet to load your live {visibleAssetSymbols.join(', ')} balances.
           </div>
         )}
       </div>
@@ -2215,7 +2227,7 @@ export default function DemoBridge() {
         </div>
 
         <div style={{ display: 'grid', gap: '0.75rem' }}>
-          {(Object.keys(visibleProtocolAccounting) as AssetSymbol[]).map(symbol => {
+          {visibleAssetSymbols.map(symbol => {
             const line = visibleProtocolAccounting[symbol];
 
             return (
@@ -2705,7 +2717,7 @@ export default function DemoBridge() {
           </div>
 
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
-            {(['all', 'STX', 'sBTC', 'USDCx'] as const).map(asset => (
+            {explorerAssetOptions.map(asset => (
               <button
                 key={asset}
                 onClick={() => setExplorerAssetFilter(asset)}
